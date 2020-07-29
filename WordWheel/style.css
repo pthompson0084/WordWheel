@@ -1,0 +1,16 @@
+body
+{
+		background-color: #E8A317; 
+		color:#7F462C;
+		font-family: Times New Roman, Georgia, serif; 
+		font-size: 18pt;
+}
+
+a:link {color:blue}
+a:active{color:red}
+a:hover{color:green}
+a:visited{color:purple}
+
+
+
+
