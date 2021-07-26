@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <!--This page was created by Patrick Thompson-->
 
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WordWheel</title>
 </head>
 
 <body>
-
 <!-- Initial JS: 
-	1. Pick 4 or 5 unique consonants and 2 or 3 unique vowels at random for a total of 7 letters. If 'Q' picked then 'U' is one of the vowels. Select 1 letter as the "special letter" (but not	'Q', 'Z', 'X', or 'J').
-	2. From words.csv, make a list of all words >= 4 letters in length with only the selected letters 	and >= 1 special letter. 	
-	3. If there is not a "pangram" in the list or there is an insufficient number of words, start over.
-	4. Assign each word in the list a point value. 4 letter words = 1 point. Longer words = 1 point per letter. A "pangram" gets a 7 point bonus.
-	5. Determine "genius" level number of points (80% of 4, 5, 6, etc letter words and their corresponding points added together).
-	6. Display the letters in a wheel shape, with the special letter in the center. -->
+	1. Pick 4 to 6 unique consonants and 2 to 3 unique vowels at random for a total of 7 letters. If 'Q' picked then 'U' is one of the vowels. Select 1 letter as the "required letter" (but not	'Q', 'Z', 'X', or 'J').
+	2. From words.csv, make a list of all words with >= 4 letters of only the selected letters 	and >= 1 of the required letter. 	
+	3. If there is not a "pangram" (with all 7 unique letters) in the list or there is an insufficient number of words (< 20), start over with new letters.
+	4. Assign each word in the list a point value. 4 letter words = 1 point. Longer words = 1 point per letter. A pangram gets a 7 point bonus.
+	5. Display the letters in a wheel shape, with the special letter in the center. 
+	
+	-->
 	
 <!-- Text box for player to enter words. -->
 
@@ -23,16 +24,36 @@
 
 <!-- "Delete" button to delete an entered letter. -->
 
-<!-- Bar graph that corresponds in length to the highest possible score and fills as player scores more points, including a line that indicates "genius" level has been reached. Pop-up window once "genius" level achieved that says "Congratulations! You're a genius!" -->
+<!-- Bar graph that corresponds in length to the highest possible score and fills as player scores more points, including a line that indicates "genius" level has been reached. Pop-up window once "genius" level achieved -->
 
 <!-- Dropdown list to show successful words the player has already entered. -->
 
 
+<h1>WordWheel</h1>
 
 
+<label for="progressBar" id="level">Beginner </label>
+<progress id="progressBar" value="0" max="100"></progress>
+<span id="percentage">[Progress]</span>
+
+<input type="button" id="enterButton" value="Enter"></button>
 
 
+<script>
 
+const progressBar = document.getElementById('progressBar');
+const percentage = document.getElementById('percentage');
+const points = 34;
+const totalPoints = 100;
+const progress = points / totalPoints;
+const enterButton = document.getElementById('enterButton');
+
+enter.addEventListener('click', function (){
+	bar.value = Math.floor(100 * points / totalPoints);
+	percentage.innerHTML = bar.value + '%');
+}
+
+</script>
 
 
 
