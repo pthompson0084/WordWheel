@@ -33,11 +33,20 @@
 
 <label for="progressBar">Beginner </label>
 <progress id="progressBar" max="100" value="0"></progress>
-<span id="percentage">0%</span> <br>
-<input type="button" id="yourWords" value="your words..."> <br>
-<div id="wordList"></div>
+<span id="percentage">0%</span> <br><br>
 <input type="text" id="wordGuess" name="wordGuess" size="16"> <br>
-<input type="button" id="enterButton" value="Enter">
+<div id="wordWheel">
+<pre id="row1">		A</pre>
+<pre id="row2">	B		C</pre>
+<pre id="row3">		D</pre>
+<pre id="row4">	E		F</pre>
+<pre id="row5">		G</pre>
+</div>
+<input type="button" id="deleteLetterButton" value="Delete">
+<input type="button" id="enterButton" value="Enter"> <br>
+<p>Your words</p> 
+<span id="wordsOutOfTotal">0/0</span> <br>
+<div id="wordList"></div>
 
 
 <script>
@@ -50,27 +59,28 @@ let points = 0;
 let totalPoints = 100;
 let progress = 0;
 
-<!-- initialize game: find an eligible word and create valid word list from csv file, calculate and set totalPoints -->
+<!-- initialize game: find an eligible word and create valid word list from csv file, calculate and set totalPoints (project requirement part 1 of: "[1]Read and parse an external file (such as JSON or CSV) into your application and [2] display some data from that in your app") -->
 
 
-<!-- yourWords button: toggles a display of successful word attempts (create a JS array and put into HTML list(for project requirement)) -->
+<!-- yourWords list: display of successful word attempts (create a JS array and put into HTML list 
+
+(project requirement part 2 of: "[1]Read and parse an external file (such as JSON or CSV) into your application and [2] display some data from that in your app") -->
 
 
 <!-- enter button: enters player's word attempt from wordGuess text input; -->
 enterButton.addEventListener('click', function (){
-		<!-- let progress = 0; -->
 		progressUpdate(points, totalPoints);
 		progressBarUpdate(progress);
 
 	})
 	
-	<!-- progress update (for project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" -->
+	<!-- progress update (project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" -->
 	function progressUpdate(argPoints, argTotalPoints) {
 		progress = argPoints / argTotalPoints;
 		return progress;
 	}
 	
-	<!-- progress bar update function, and percentage update -->
+	<!-- progress bar update function, and percentage update (project requirement: "Visualize data in a graph, chart, or other visual representation of data") -->
 	function progressBarUpdate(argProgress) {
 		progressBar.value = Math.floor(100 * argProgress);
 		percentage.innerHTML = progressBar.value + '%';
