@@ -31,27 +31,51 @@
 
 <h1>WordWheel</h1>
 
-
 <label for="progressBar">Beginner </label>
-<progress id="progressBar" aria-valuemax="100" value="70">70%</progress>
-<span id="percentage">[Progress]</span>
-
-<input type="button" id="enterButton" value="Enter"></button>
+<progress id="progressBar" max="100" value="0"></progress>
+<span id="percentage">0%</span> <br>
+<input type="button" id="yourWords" value="your words..."> <br>
+<div id="wordList"></div>
+<input type="text" id="wordGuess" name="wordGuess" size="16"> <br>
+<input type="button" id="enterButton" value="Enter">
 
 
 <script>
 
+const enterButton = document.getElementById('enterButton');
 const progressBar = document.getElementById('progressBar');
 const percentage = document.getElementById('percentage');
-const points = 34;
-const totalPoints = 100;
-const progress = points / totalPoints;
-const enterButton = document.getElementById('enterButton');
+let yourWords = false; <!-- sentinel value for showing word list -->
+let points = 0;
+let totalPoints = 100;
+let progress = 0;
 
-enter.addEventListener('click', function (){
-	bar.value = Math.floor(100 * points / totalPoints);
-	percentage.innerHTML = bar.value + '%');
-}
+<!-- initialize game: find an eligible word and create valid word list from csv file, calculate and set totalPoints -->
+
+
+<!-- yourWords button: toggles a display of successful word attempts (create a JS array and put into HTML list(for project requirement)) -->
+
+
+<!-- enter button: enters player's word attempt from wordGuess text input; -->
+enterButton.addEventListener('click', function (){
+		<!-- let progress = 0; -->
+		progressUpdate(points, totalPoints);
+		progressBarUpdate(progress);
+
+	})
+	
+	<!-- progress update (for project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" -->
+	function progressUpdate(argPoints, argTotalPoints) {
+		progress = argPoints / argTotalPoints;
+		return progress;
+	}
+	
+	<!-- progress bar update function, and percentage update -->
+	function progressBarUpdate(argProgress) {
+		progressBar.value = Math.floor(100 * argProgress);
+		percentage.innerHTML = progressBar.value + '%';
+	}
+	
 
 </script>
 
