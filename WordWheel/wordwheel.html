@@ -9,25 +9,6 @@
 </head>
 
 <body>
-<!-- Initial JS: 
-	1. Pick 4 to 6 unique consonants and 2 to 3 unique vowels at random for a total of 7 letters. If 'Q' picked then 'U' is one of the vowels. Select 1 letter as the "required letter" (but not	'Q', 'Z', 'X', or 'J').
-	2. From words.csv, make a list of all words with >= 4 letters of only the selected letters 	and >= 1 of the required letter. 	
-	3. If there is not a "pangram" (with all 7 unique letters) in the list or there is an insufficient number of words (< 20), start over with new letters.
-	4. Assign each word in the list a point value. 4 letter words = 1 point. Longer words = 1 point per letter. A pangram gets a 7 point bonus.
-	5. Display the letters in a wheel shape, with the special letter in the center. 
-	
-	-->
-	
-<!-- Text box for player to enter words. -->
-
-<!-- "Enter" button for player to submit word. Pop-up window that says the number of points awarded when a correct word is entered, or "Not in word list", or "Already found". -->
-
-<!-- "Delete" button to delete an entered letter. -->
-
-<!-- Bar graph that corresponds in length to the highest possible score and fills as player scores more points, including a line that indicates "genius" level has been reached. Pop-up window once "genius" level achieved -->
-
-<!-- Dropdown list to show successful words the player has already entered. -->
-
 
 <h1>WordWheel</h1>
 
@@ -49,45 +30,7 @@
 <div id="wordList"></div>
 
 
-<script>
-
-const enterButton = document.getElementById('enterButton');
-const progressBar = document.getElementById('progressBar');
-const percentage = document.getElementById('percentage');
-let yourWords = false; <!-- sentinel value for showing word list -->
-let points = 0;
-let totalPoints = 100;
-let progress = 0;
-
-<!-- initialize game: find an eligible word and create valid word list from csv file, calculate and set totalPoints (project requirement part 1 of: "[1]Read and parse an external file (such as JSON or CSV) into your application and [2] display some data from that in your app") -->
-
-
-<!-- yourWords list: display of successful word attempts (create a JS array and put into HTML list 
-
-(project requirement part 2 of: "[1]Read and parse an external file (such as JSON or CSV) into your application and [2] display some data from that in your app") -->
-
-
-<!-- enter button: enters player's word attempt from wordGuess text input; -->
-enterButton.addEventListener('click', function (){
-		progressUpdate(points, totalPoints);
-		progressBarUpdate(progress);
-
-	})
-	
-	<!-- progress update (project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" -->
-	function progressUpdate(argPoints, argTotalPoints) {
-		progress = argPoints / argTotalPoints;
-		return progress;
-	}
-	
-	<!-- progress bar update function, and percentage update (project requirement: "Visualize data in a graph, chart, or other visual representation of data") -->
-	function progressBarUpdate(argProgress) {
-		progressBar.value = Math.floor(100 * argProgress);
-		percentage.innerHTML = progressBar.value + '%';
-	}
-	
-
-</script>
+<script src="index.js"></script>
 
 
 
