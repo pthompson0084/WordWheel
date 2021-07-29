@@ -32,11 +32,14 @@ newGameButton.addEventListener('click', function (){
 	if (listIndex < numberOfWordLists) {
 	points = 0;
 	progress = 0;
+	yourWords = 0;
+	yourPangrams = 0;
 	setLetters(listIndex);
 	calculateNumberOfPangrams(listIndex);
 	calculatePossiblePoints(listIndex);
 	calculatePossibleWords(listIndex);
 	wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
+	wordList.innerHTML = "";
 	listIndex++;
 	} else {
 		window.alert('No more words today!');
@@ -135,9 +138,9 @@ function progressBarUpdate(argProgress) {
 	
 quitButton.addEventListener('click', function (){
 	
-}
+})
 	
 directionsButton.addEventListener('click', function (){
 
-}
+})
 	
