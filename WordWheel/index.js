@@ -1,20 +1,31 @@
 const newGameButton = document.getElementById('newGameButton');
 const enterButton = document.getElementById('enterButton');
+const directionsButton = document.getElementById('directionsButton');
+const quitButton = document.getElementById('quitButton');
 const progressBar = document.getElementById('progressBar');
 const percentage = document.getElementById('percentage');
 const wordsOutOfTotal = document.getElementById('wordsOutOfTotal');
+const wordGuessInput = document.getElementById('wordGuessInput');
+const designation = document.getElementById('designation');
 const row1 = document.getElementById('row1');
 const row2 = document.getElementById('row2');
 const row3 = document.getElementById('row3');
 const row4 = document.getElementById('row4');
 const row5 = document.getElementById('row5');
+const wordList = document.getElementById('wordList');
 let points = 0;
 let progress = 0;
 let possiblePoints = 0;
 let possibleWords = 0;
-let numberOfWordLists = 3;
+let numberOfWordLists = 4;
 let numberOfPangrams = 0;
 let listIndex = 0;
+let currentWords = [];
+let currentPangrams = [];
+let yourWords = 0;
+let yourPangrams = 0;
+let designationPct = 0;
+progressBar.value = 0;
 
 /* initialize game:  */
 newGameButton.addEventListener('click', function (){
@@ -25,7 +36,7 @@ newGameButton.addEventListener('click', function (){
 	calculateNumberOfPangrams(listIndex);
 	calculatePossiblePoints(listIndex);
 	calculatePossibleWords(listIndex);
-	wordsOutOfTotal.innerHTML = '(0/' + possibleWords + ', ' + 'Pangrams: ' + numberOfPangrams + ')';
+	wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
 	listIndex++;
 	} else {
 		window.alert('No more words today!');
@@ -52,34 +63,81 @@ function calculatePossiblePoints(argListIndex) {
 }
 
 function calculatePossibleWords(argListIndex) {
-	let temp = words[argListIndex];
+	currentWords = words[argListIndex];
 	let temp2 = pangrams[argListIndex];
-	possibleWords = temp.length + temp2.length;
+	possibleWords = currentWords.length + temp2.length;
 	return possibleWords;
 }
 
 function calculateNumberOfPangrams(argListIndex) {
-	let temp = pangrams[argListIndex];
-	numberOfPangrams = temp.length;
+	currentPangrams = pangrams[argListIndex];
+	numberOfPangrams = currentPangrams.length;
 	return numberOfPangrams;
 }
 
 /* enter button: enters player's word attempt from wordGuess text input; */
 enterButton.addEventListener('click', function (){
+		for (let x=0; x<numberOfPangrams; x++) {
+			//currentPangrams[x].toLowerCase();
+			if (wordGuessInput.value == currentPangrams[x]) {
+				points = points + 4;
+				yourWords++;
+				yourPangrams++;
+				wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
+				let listWord = currentPangrams.splice(x, 1);
+				wordList.innerHTML += "<li>*" + listWord + "</li>";
+				//changeDesignation(points, possiblePoints);
+			}
+		}
+		for (let x=0; x<currentWords.length; x++) {
+			//currentWords[x].value.toLowerCase();
+			if (wordGuessInput.value == currentWords[x]) {
+				points++;
+				yourWords++;
+				wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
+				let listWord = currentWords.splice(x, 1);
+				wordList.innerHTML += "<li>" + listWord + "</li>";
+				//changeDesignation(points, possiblePoints);
+			}
+		}	
 		progressUpdate(points, possiblePoints);
 		progressBarUpdate(progress);
-
+		changeDesignation(progress);
+		wordGuessInput.value = '';
 	})
 	
+function changeDesignation(argProgress) {
+	designationPct = Math.floor(100 * (argProgress));
+	if (designationPct >= 30 && designationPct < 50) {
+		designation.innerHTML = 'Doing Very Well!';
+	} else if (designationPct >= 50 && designationPct < 70) {
+		designation.innerHTML = 'Great!!';
+	} else if (designationPct >= 70 && designationPct < 85) {
+		designation.innerHTML = 'Amazing!!';
+	} else if (designationPct >= 85 && designationPct < 99) {
+		designation.innerHTML = 'Genius!!!';
+	} else if (designation >= 99) {
+		designation.innerHTML = 'PERFECTION';
+	} 
+}
+	
 /* 	progress update (project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" */
-	function progressUpdate(argPoints, argPossiblePoints) {
-		progress = argPoints / argPossiblePoints;
-		return progress;
-	}
+function progressUpdate(argPoints, argPossiblePoints) {
+	progress = argPoints / argPossiblePoints;
+	return progress;
+}
 	
 /* 	progress bar update function, and percentage update (project requirement: "Visualize data in a graph, chart, or other visual representation of data") */
-	function progressBarUpdate(argProgress) {
-		progressBar.value = Math.floor(100 * argProgress);
-		percentage.innerHTML = '[' + points + '/' + possiblePoints + 'points] ' + progressBar.value + '%';
-	}
+function progressBarUpdate(argProgress) {
+	progressBar.value = Math.floor(100 * argProgress);
+	percentage.innerHTML = '[' + points + '/' + possiblePoints + 'points] ' + progressBar.value + '%';
+}
+	
+quitButton.addEventListener('click', function (){
+	
+}
+	
+directionsButton.addEventListener('click', function (){
+
+}
 	
