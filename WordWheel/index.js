@@ -44,6 +44,7 @@ newGameButton.addEventListener('click', function (){
 	wordList.innerHTML = "";
 	enterButton.disabled = false;
 	missedWordsHere.innerHTML = "";
+	designation.innerHTML = "Let's begin!";
 	listIndex++;
 	} else {
 		window.alert('No more words today!');
@@ -115,8 +116,10 @@ enterButton.addEventListener('click', function (){
 	
 function changeDesignation(argProgress) {
 	designationPct = Math.floor(100 * (argProgress));
-	if (designationPct >= 30 && designationPct < 50) {
-		designation.innerHTML = 'Doing Very Well!';
+	if (designationPct >= 1 && designationPct < 20) {
+		designation.innerHTML = 'Beginner';
+	} else if (designationPct >= 20 && designationPct < 50) {
+		designation.innerHTML = 'Doing Well!';
 	} else if (designationPct >= 50 && designationPct < 70) {
 		designation.innerHTML = 'Great!!';
 	} else if (designationPct >= 70 && designationPct < 85) {

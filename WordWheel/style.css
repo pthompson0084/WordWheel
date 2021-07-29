@@ -10,12 +10,17 @@ body {
 
 h1 {
 	color: Sienna;
+	font-size: 300%;
 }
 
 input {
 	background-color: wheat;
 	margin-left: 1em;
 	margin-right: 1em;
+}
+
+#designation {
+	font-weight: bold;
 }
 
 #wordWheel {
