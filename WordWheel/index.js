@@ -27,31 +27,32 @@ let yourPangrams = 0;
 let designationPct = 0;
 progressBar.value = 0;
 
-enterButton.disabled = true;
+enterButton.disabled = true; /* before a new game starts, the enter button is disabled */
 
 /* initialize game:  */
 newGameButton.addEventListener('click', function (){
-	if (listIndex < numberOfWordLists) {
+	if (listIndex < numberOfWordLists) { /* to keep from going out of the bounds of available word lists */
 	points = 0;
 	progress = 0;
 	yourWords = 0;
 	yourPangrams = 0;
-	setLetters(listIndex);
-	calculateNumberOfPangrams(listIndex);
+	setLetters(listIndex); 
+	calculateNumberOfPangrams(listIndex); /* calculations that are presented to the player */
 	calculatePossiblePoints(listIndex);
 	calculatePossibleWords(listIndex);
 	wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
-	wordList.innerHTML = "";
-	enterButton.disabled = false;
-	missedWordsHere.innerHTML = "";
-	designation.innerHTML = "Let's begin!";
+	wordList.innerHTML = ""; /* clearing prior game list */
+	enterButton.disabled = false; /* activate the enter button for a new game */
+	missedWordsHere.innerHTML = ""; /* clearing prior game missed words list */
+	designation.innerHTML = "Let's begin!"; /* the first level designation is set */
 	listIndex++;
 	} else {
-		window.alert('No more words today!');
+		window.alert('No more words today!'); /* notifies player when the available word lists are used up */
 		listIndex = 0;
 	}
 })
 
+/* a new batch of letters is presented */
 function setLetters(argListIndex) {
 		row1.innerHTML = letters[argListIndex][1];
 		row2.innerHTML = letters[argListIndex][2] + '             ' + letters[argListIndex][3];
@@ -60,16 +61,17 @@ function setLetters(argListIndex) {
 		row5.innerHTML = letters[argListIndex][6];
 }
 
+/* calculate total possible points. Words are worth 1, pangrams 4. */
 function calculatePossiblePoints(argListIndex) {
-	// let temp1 = pangrams[argListIndex];
 	let temp2 = words[argListIndex];
 	let pangramPoints = 4 * numberOfPangrams;
 	let wordPoints = temp2.length;
 	possiblePoints = pangramPoints + wordPoints;
-	progressBarUpdate(progress);
+	progressBarUpdate(progress); // progress bar is updated 
 	return possiblePoints;
 }
 
+/* calculate the number of possible words, including pangrams */
 function calculatePossibleWords(argListIndex) {
 	currentWords = words[argListIndex];
 	let temp2 = pangrams[argListIndex];
@@ -77,43 +79,41 @@ function calculatePossibleWords(argListIndex) {
 	return possibleWords;
 }
 
+/* calculate the number of possible pangrams */
 function calculateNumberOfPangrams(argListIndex) {
 	currentPangrams = pangrams[argListIndex];
 	numberOfPangrams = currentPangrams.length;
 	return numberOfPangrams;
 }
 
-/* enter button: enters player's word attempt from wordGuess text input; */
+/* enter button: enters player's word attempt from wordGuess text input */
 enterButton.addEventListener('click', function (){
 		for (let x=0; x<numberOfPangrams; x++) {
-			//currentPangrams[x].toLowerCase();
-			if (wordGuessInput.value == currentPangrams[x]) {
+			if (wordGuessInput.value == currentPangrams[x]) { /* if there's a pangram match */
 				points = points + 4;
 				yourWords++;
 				yourPangrams++;
-				wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
-				let listWord = currentPangrams.splice(x, 1);
-				wordList.innerHTML += "<li>*" + listWord + "</li>";
-				//changeDesignation(points, possiblePoints);
+				wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')'; /*update progress on page */
+				let listWord = currentPangrams.splice(x, 1); /* remove successful words so that a list of undiscovered words can be displayed at the end of the game */ 
+				wordList.innerHTML += "<li>*" + listWord + "</li>"; // list the word on the display
 			}
 		}
-		for (let x=0; x<currentWords.length; x++) {
-			//currentWords[x].value.toLowerCase();
+		for (let x=0; x<currentWords.length; x++) { //same as pangram actions above, but for the non-pangrams
 			if (wordGuessInput.value == currentWords[x]) {
 				points++;
 				yourWords++;
 				wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
 				let listWord = currentWords.splice(x, 1);
 				wordList.innerHTML += "<li>" + listWord + "</li>";
-				//changeDesignation(points, possiblePoints);
 			}
 		}	
-		progressUpdate(points, possiblePoints);
+		progressUpdate(points, possiblePoints); // updates of progress for display
 		progressBarUpdate(progress);
 		changeDesignation(progress);
 		wordGuessInput.value = '';
 	})
-	
+
+/* the player receives these verbal designations of progress, depending on percentage of points achieved */	
 function changeDesignation(argProgress) {
 	designationPct = Math.floor(100 * (argProgress));
 	if (designationPct >= 1 && designationPct < 20) {
@@ -131,20 +131,21 @@ function changeDesignation(argProgress) {
 	} 
 }
 	
-/* 	progress update (project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" */
+/* 	progress update (points / possiblePoints) */
 function progressUpdate(argPoints, argPossiblePoints) {
 	progress = argPoints / argPossiblePoints;
 	return progress;
 }
 	
-/* 	progress bar update function, and percentage update (project requirement: "Visualize data in a graph, chart, or other visual representation of data") */
+/* 	progress bar update function, and percentage update for display */
 function progressBarUpdate(argProgress) {
 	progressBar.value = Math.floor(100 * argProgress);
 	percentage.innerHTML = '[' + points + '/' + possiblePoints + 'points] ' + progressBar.value + '%';
 }
-	
+
+/* upon quitting, list all missed pangrams and words */	
 quitButton.addEventListener('click', function (){
-	enterButton.disabled = true;
+	enterButton.disabled = true; // disable enter button (preventing entering words after they're listed)
 	let missedWordsList = "";
 	let missedPangrams = "";
 	let missedWords = "";
