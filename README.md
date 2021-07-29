@@ -29,3 +29,4 @@ determines a new value based on those inputs, and returns a new value"
 
 (And anything else you might see) 
 
+Ultimately, I would like to make this game draw on a dictionary file (csv), and figure out pangrams and words on its own. Until then, it draws on arrays created by hand (in words.js). Also I should note that this type of game, though with differences, is not original to me. It's just my own implementation.
