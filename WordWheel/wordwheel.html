@@ -6,32 +6,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WordWheel</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<h1>WordWheel</h1>
+<h1>WordWheel !</h1>
 
 <input type="button" id="newGameButton" value="New Game">
 <input type="button" id="directionsButton" value="Directions"> <br>
 
-<progress id="progressBar" max="100" value="0"></progress>
+<progress id="progressBar" max="100" value="0"></progress><br>
 <span id="percentage">[0/0 points] 0%</span> <br>
 <label for="progressBar" id="designation">Beginner</label> <br>
 
 <div id="wordWheel">
-<pre id="row1">		A</pre>
-<pre id="row2">	B		C</pre>
-<pre id="row3">		D</pre>
-<pre id="row4">	E		F</pre>
-<pre id="row5">		G</pre>
+<pre id="row1">A</pre>
+<pre id="row2">B             C</pre>
+<pre id="row3">D</pre>
+<pre id="row4">E             F</pre>
+<pre id="row5">G</pre>
 </div>
 
-<p><input type="text" id="wordGuessInput" name="wordGuess" size="20"> (all CAPS)<p>
+<p><input type="text" id="wordGuessInput" name="wordGuess" size="20">(all caps)<p>
 <input type="button" id="enterButton" value="Enter"> <br>
-<input type="button" id="quitButton" value="Quit / Missed Words"> <br>
 
-<p>Your words: <span id="wordsOutOfTotal">(0/0, *Pangrams: 0/0)</span></p> <br>
-<ul id="wordList"></ul>
+<p>Your words: <span id="wordsOutOfTotal">(0/0, *Pangrams: 0/0)</span></p>
+<ol id="wordList"></ol>
+
+<input type="button" id="quitButton" value="Quit / Missed Words">
+<ol id="missedWordsHere"></ol>
 
 <script src="words.js"></script>
 <script src="index.js"></script>

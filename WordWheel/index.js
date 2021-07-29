@@ -27,6 +27,8 @@ let yourPangrams = 0;
 let designationPct = 0;
 progressBar.value = 0;
 
+enterButton.disabled = true;
+
 /* initialize game:  */
 newGameButton.addEventListener('click', function (){
 	if (listIndex < numberOfWordLists) {
@@ -40,6 +42,8 @@ newGameButton.addEventListener('click', function (){
 	calculatePossibleWords(listIndex);
 	wordsOutOfTotal.innerHTML = '(' + yourWords + '/' + possibleWords + ', ' + '*Pangrams: ' + yourPangrams + '/' + numberOfPangrams + ')';
 	wordList.innerHTML = "";
+	enterButton.disabled = false;
+	missedWordsHere.innerHTML = "";
 	listIndex++;
 	} else {
 		window.alert('No more words today!');
@@ -48,11 +52,11 @@ newGameButton.addEventListener('click', function (){
 })
 
 function setLetters(argListIndex) {
-		row1.innerHTML = '		' + letters[argListIndex][1];
-		row2.innerHTML = '	' + letters[argListIndex][2] + '		' + letters[argListIndex][3];
-		row3.innerHTML = '		' + letters[argListIndex][0];
-		row4.innerHTML = '	' + letters[argListIndex][4] + '		' + letters[argListIndex][5];
-		row5.innerHTML = '		' + letters[argListIndex][6];
+		row1.innerHTML = letters[argListIndex][1];
+		row2.innerHTML = letters[argListIndex][2] + '             ' + letters[argListIndex][3];
+		row3.innerHTML = letters[argListIndex][0];
+		row4.innerHTML = letters[argListIndex][4] + '             ' + letters[argListIndex][5];
+		row5.innerHTML = letters[argListIndex][6];
 }
 
 function calculatePossiblePoints(argListIndex) {
@@ -137,10 +141,21 @@ function progressBarUpdate(argProgress) {
 }
 	
 quitButton.addEventListener('click', function (){
-	
+	enterButton.disabled = true;
+	let missedWordsList = "";
+	let missedPangrams = "";
+	let missedWords = "";
+	let x, y;
+	for (x = 0; x < currentPangrams.length; x++) {
+		missedPangrams += "<li>" + "*" + currentPangrams[x] + "</li>";
+	}
+	for (y = 0; y < currentWords.length; y++) {
+		missedWords += "<li>" + currentWords[y] + "</li>";
+	}
+	missedWordsHere.innerHTML = missedPangrams + missedWords; 
 })
 	
 directionsButton.addEventListener('click', function (){
-
+	window.alert('Find and enter words from the given 7 letters. WORDS MUST BE AT LEAST 4 LETTERS LONG and CONTAIN THE CENTER LETTER. You can use each letter as many times as necessary or not at all. One point for each word, plus a bonus of three points if your word uses all 7 letters (a pangram). There is at least 1 pangram in each game.');
 })
-	
+
