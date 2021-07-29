@@ -1,45 +1,85 @@
-
-/* Initial JS: 
-	1. Pick 4 or 5 unique consonants and 2 or 3 unique vowels at random for a total of 7 letters. If 'Q' picked then 'U' is one of the vowels. Select 1 letter as the "special letter" (but not	'Q', 'Z', 'X', or 'J').
-	2. From words.csv, make a list of all words >= 4 letters in length with only the selected letters 	and >= 1 special letter. 	
-	3. If there is not a "pangram" in the list or there is an insufficient number of words, start over.
-	4. Assign each word in the list a point value. 4 letter words = 1 point. Longer words = 1 point per letter. A "pangram" gets a 7 point bonus.
-	5. Determine "genius" level number of points (80% of 4, 5, 6, etc letter words and their corresponding points added together).
-	6. Display the letters in a wheel shape, with the special letter in the center. */
-	
-	
-	
-
+const newGameButton = document.getElementById('newGameButton');
 const enterButton = document.getElementById('enterButton');
 const progressBar = document.getElementById('progressBar');
 const percentage = document.getElementById('percentage');
-let yourWords = false; <!-- sentinel value for showing word list -->
+const wordsOutOfTotal = document.getElementById('wordsOutOfTotal');
+const row1 = document.getElementById('row1');
+const row2 = document.getElementById('row2');
+const row3 = document.getElementById('row3');
+const row4 = document.getElementById('row4');
+const row5 = document.getElementById('row5');
 let points = 0;
-let totalPoints = 100;
 let progress = 0;
+let possiblePoints = 0;
+let possibleWords = 0;
+let numberOfWordLists = 3;
+let numberOfPangrams = 0;
+let listIndex = 0;
 
-/* initialize game: find an eligible word and create valid word list from csv file, calculate and set totalPoints (project requirement part 1 of: "[1]Read and parse an external file (such as JSON or CSV) into your application and [2] display some data from that in your app") */
+/* initialize game:  */
+newGameButton.addEventListener('click', function (){
+	if (listIndex < numberOfWordLists) {
+	points = 0;
+	progress = 0;
+	setLetters(listIndex);
+	calculateNumberOfPangrams(listIndex);
+	calculatePossiblePoints(listIndex);
+	calculatePossibleWords(listIndex);
+	wordsOutOfTotal.innerHTML = '(0/' + possibleWords + ', ' + 'Pangrams: ' + numberOfPangrams + ')';
+	listIndex++;
+	} else {
+		window.alert('No more words today!');
+		listIndex = 0;
+	}
+})
 
+function setLetters(argListIndex) {
+		row1.innerHTML = '		' + letters[argListIndex][1];
+		row2.innerHTML = '	' + letters[argListIndex][2] + '		' + letters[argListIndex][3];
+		row3.innerHTML = '		' + letters[argListIndex][0];
+		row4.innerHTML = '	' + letters[argListIndex][4] + '		' + letters[argListIndex][5];
+		row5.innerHTML = '		' + letters[argListIndex][6];
+}
 
-/* yourWords list: display of successful word attempts (create a JS array and put into HTML list (project requirement part 2 of: "[1]Read and parse an external file (such as JSON or CSV) into your application and [2] display some data from that in your app") */
+function calculatePossiblePoints(argListIndex) {
+	// let temp1 = pangrams[argListIndex];
+	let temp2 = words[argListIndex];
+	let pangramPoints = 4 * numberOfPangrams;
+	let wordPoints = temp2.length;
+	possiblePoints = pangramPoints + wordPoints;
+	progressBarUpdate(progress);
+	return possiblePoints;
+}
 
+function calculatePossibleWords(argListIndex) {
+	let temp = words[argListIndex];
+	let temp2 = pangrams[argListIndex];
+	possibleWords = temp.length + temp2.length;
+	return possibleWords;
+}
+
+function calculateNumberOfPangrams(argListIndex) {
+	let temp = pangrams[argListIndex];
+	numberOfPangrams = temp.length;
+	return numberOfPangrams;
+}
 
 /* enter button: enters player's word attempt from wordGuess text input; */
 enterButton.addEventListener('click', function (){
-		progressUpdate(points, totalPoints);
+		progressUpdate(points, possiblePoints);
 		progressBarUpdate(progress);
 
 	})
 	
 /* 	progress update (project requirement: "Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value" */
-	function progressUpdate(argPoints, argTotalPoints) {
-		progress = argPoints / argTotalPoints;
+	function progressUpdate(argPoints, argPossiblePoints) {
+		progress = argPoints / argPossiblePoints;
 		return progress;
 	}
 	
 /* 	progress bar update function, and percentage update (project requirement: "Visualize data in a graph, chart, or other visual representation of data") */
 	function progressBarUpdate(argProgress) {
 		progressBar.value = Math.floor(100 * argProgress);
-		percentage.innerHTML = progressBar.value + '%';
+		percentage.innerHTML = '[' + points + '/' + possiblePoints + 'points] ' + progressBar.value + '%';
 	}
 	

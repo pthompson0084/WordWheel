@@ -9,13 +9,15 @@
 </head>
 
 <body>
-
 <h1>WordWheel</h1>
 
-<label for="progressBar">Beginner </label>
+<input type="button" id="newGameButton" value="New Game">
+<input type="button" id="directionsButton" value="Directions"> <br>
+
 <progress id="progressBar" max="100" value="0"></progress>
-<span id="percentage">0%</span> <br><br>
-<input type="text" id="wordGuess" name="wordGuess" size="16"> <br>
+<span id="percentage">[0/0 points] 0%</span> <br>
+<label for="progressBar" id="designation">Beginner</label> <br>
+
 <div id="wordWheel">
 <pre id="row1">		A</pre>
 <pre id="row2">	B		C</pre>
@@ -23,17 +25,16 @@
 <pre id="row4">	E		F</pre>
 <pre id="row5">		G</pre>
 </div>
-<input type="button" id="deleteLetterButton" value="Delete">
+
+<input type="text" id="wordGuessInput" name="wordGuess" size="16"> <br>
 <input type="button" id="enterButton" value="Enter"> <br>
-<p>Your words</p> 
-<span id="wordsOutOfTotal">0/0</span> <br>
+<input type="button" id="quitButton" value="Quit / Missed Words"> <br>
+
+<p>Your words: <span id="wordsOutOfTotal">(0/0)</span></p> <br>
 <div id="wordList"></div>
 
-
+<script src="words.js"></script>
 <script src="index.js"></script>
-
-
-
 </body>
 
 </html>
